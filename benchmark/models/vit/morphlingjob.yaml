@@ -1,0 +1,39 @@
+apiVersion: morphling.alibaba.com/v1
+kind: MorphlingJob
+metadata:
+  generateName: vit-
+  namespace: default
+spec:
+  originPerf: 84.98181421707855
+  application: vit
+  localBsz: 64
+  workDir: /root/vit/
+  template:
+    spec:
+      containers:
+        - command: ["/bin/sh", "-c"]
+          args:
+            [
+              "python  -m torch.distributed.launch --nproc_per_node=$NPROC --nnodes=$NNODES  --node_rank=$RANK --master_addr=$MASTER_ADDR --master_port=$MASTER_PORT   /root/vit/run_image_classification.py     --dataset_name Maysee/tiny-imagenet     --output_dir ./outputs/     --remove_unused_columns False     --do_train       --learning_rate 2e-5       --per_device_train_batch_size $BATCH_SIZE    --logging_strategy steps     --logging_steps 1  --num_train_epochs 300000 --max_steps $STEPS    --save_strategy no   --seed 1337  --overwrite_output_dir",
+            ]
+          image: registry.cn-beijing.aliyuncs.com/morphling/deepspeed:ddp7
+          name: pytorch
+          resources:
+            limits:
+              nvidia.com/gpu: 1
+            requests:
+              nvidia.com/gpu: 1
+          volumeMounts:
+            - mountPath: /mnt/nasdata
+              name: nasdata
+            - mountPath: /dev/shm
+              name: mysys-shm
+      imagePullSecrets:
+        - name: mycred
+      volumes:
+        - hostPath:
+            path: /data/paper/
+          name: nasdata
+        - emptyDir:
+            medium: Memory
+          name: mysys-shm

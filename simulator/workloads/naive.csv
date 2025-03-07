@@ -1,0 +1,11 @@
+name,submission_time,duration,application,num_gpus,num_cpus,bandwidth,exec_plan,steps,is_sla
+vit-0,0,3163.091667,vit,2,16,0,zero-dp,37239,0
+llama30-1,1639,142.2190972,llama30,48,384,1.25,344,64,0
+t5-2,3519,3312,t5,4,32,0,ga,8109,0
+llama7-3,3672,1583.1375,llama7,8,64,0,zero-offload,168,0
+gpt2-4,3818,1327.116667,gpt2,8,64,0,zero-dp,2503,0
+llama30-5,4986,0.0425,llama30,40,320,1.25,524,1,0
+gpt2-6,5105,55.93333334,gpt2,4,32,0,ga,55,0
+bert-7,5467,31.39375,bert,8,64,0,zero-dp,203,0
+llama30-8,5580,5.148333333,llama30,40,320,1.25,524,2,0
+roberta-9,5586,0.933333334,roberta,2,16,0,zero-dp,1,0

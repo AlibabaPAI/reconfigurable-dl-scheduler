@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+# 1: path to workload csv
+# 2: scheduling policy
+# 3: scheduling interval in seconds
+# 4: number of nodes in the cluster
+# 5: number of GPUs per node
+# 6: number of CPUs per node
+# 7: memory (GB) per node
+# 8: bandwidth (GB/s) within a node
+# 9: bandwidth (GB/s) across nodes
+# 10: enable the online fitting module of performance model
+# 11: path to output logs
+
+if [ ! -d "./log/" ]; then
+    mkdir -p "./log/"
+fi
+
+workloads_path="../../"${1}
+output_filename="./log/"${11}_$(date '+%Y-%m-%d_%H:%M:%S').log
+
+python ../../simulator/simulator.py $workloads_path \
+    --policy $2 \
+    --interval $3 \
+    --num-nodes $4 \
+    --num-gpus $5 \
+    --num-cpus $6 \
+    --mem-per-node $7 \
+    --intra-bandwidth $8 \
+    --inter-bandwidth $9 \
+    --online-model-fitting ${10} \
+    2>&1 | tee $output_filename &

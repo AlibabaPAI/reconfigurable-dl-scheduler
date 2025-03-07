@@ -1,0 +1,4 @@
+﻿nodes,gpus,parameter_size,batch_size,seq_hid,num_cpu_threads,zero_type,is_tp,is_pp
+1,8,6426.26171875,1,536870912,4,1,0,0
+1,4,6426.26171875,1,536870912,4,1,0,0
+1,2,6426.26171875,1,536870912,4,1,0,0
