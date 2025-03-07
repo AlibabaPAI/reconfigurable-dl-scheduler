@@ -58,7 +58,6 @@ coverage.xml
 *.pot
 
 # Django stuff:
-*.log
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
@@ -74,6 +73,8 @@ instance/
 docs/_build/
 
 # PyBuilder
+.pybuilder/
+
 target/
 
 # Jupyter Notebook
@@ -93,6 +94,21 @@ ipython_config.py
 #   install all needed dependencies.
 #Pipfile.lock
 
+# poetry
+#   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
+#   This is especially recommended for binary packages to ensure reproducibility, and is more
+#   commonly ignored for libraries.
+#   https://python-poetry.org/docs/basic-usage/#commit-your-poetrylock-file-to-version-control
+#poetry.lock
+
+# pdm
+#   Similar to Pipfile.lock, it is generally recommended to include pdm.lock in version control.
+#pdm.lock
+#   pdm stores project-wide configurations in .pdm.toml, but it is recommended to not include it
+#   in version control.
+#   https://pdm.fming.dev/#use-with-ide
+.pdm.toml
+
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow
 __pypackages__/
 
@@ -102,8 +118,14 @@ celerybeat.pid
 
 # SageMath parsed files
 *.sage.py
-
-
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
 # Spyder project settings
 .spyderproject
 .spyproject
@@ -121,3 +143,46 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# PyCharm
+#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
+#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
+#  and can be added to the global gitignore or merged into this file.  For a more nuclear
+#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
+.idea/
+
+# VSCode
+.vscode/
+
+# DS Store
+.DS_Store
+
+# Results
+*.csv
+
+# Python pickle files
+*.pkl
+
+# Sphinx documentation
+_build/
+
+# datasets
+datasets
+
+# log
+log
+*/results
+*/sim_results
+*.log
+*.bug
+# *.png
+*.nsys-rep
+nohup.out

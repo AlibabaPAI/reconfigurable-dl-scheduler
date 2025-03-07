@@ -1,0 +1,5 @@
+# Micro Benchmark
+## Adapting to changing resource limits
+In the experiment for Figure 7, we firstly construct the performance model for  LLaMA-2-7B. The LLaMA-2-7B model configuration can be found in `./artifact/72_micro_benchmarks/llama7_config.py`. Then, we input different resource combinations (i.e. GPU placement) into the performance model, the model searches for the highest training throughput and get its corresponding execution plan. The detailed reconfiguration results will be printed during the execution.
+
+Figure7.ipynb gets the training throughput of other execution plans through running them in advance, and the collected data is saved at `./simulator/traces/`. In the following experiments, this method is also used to directly obtain the performance of jobs under specific resource amounts and execution plans. Figure7.ipynb also generates a figure to discript the throughput variation of different execution plans when the resource limits vary.

@@ -1,0 +1,2 @@
+# Validation
+First, validation.ipynb fits all the transformer models in Table 1 using limited profile data (in `./artifact/71_performance_model/model/profile`). These throughput values are collected from several sampled test runs in advance using different resource allocations and execution plan. It then uses the newly-generated fittable parameters to predict the performance of these models. It compares the prediction with the actual performance of the models, and generate the table for each model to show the results.
