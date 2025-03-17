@@ -1,0 +1,9 @@
+apiVersion: morphling.alibaba.com/v1
+kind: MorphlingJob
+metadata:
+  generateName: llama30-
+  namespace: default
+spec:
+  origTpt: 3.4885749171463454
+  application: llama30
+  localBsz: 4

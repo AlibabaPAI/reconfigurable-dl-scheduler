@@ -1,0 +1,39 @@
+apiVersion: morphling.alibaba.com/v1
+kind: MorphlingJob
+metadata:
+  generateName: roberta-
+  namespace: default
+spec:
+  originPerf: 22.994961648686782
+  application: roberta
+  localBsz: 8
+  workDir: /root/roberta
+  template:
+    spec:
+      containers:
+        - command: ["/bin/sh", "-c"]
+          args:
+            [
+              "python  -m torch.distributed.launch --nproc_per_node=$NPROC --nnodes=$NNODES  --node_rank=$RANK --master_addr=$MASTER_ADDR --master_port=$MASTER_PORT  /root/roberta/run_mlm.py     --model_name_or_path roberta-base     --dataset_name wikitext     --dataset_config_name wikitext-2-raw-v1     --per_device_train_batch_size $BATCH_SIZE    --logging_steps 1 --do_train  --save_strategy no --num_train_epochs 300000 --max_steps $STEPS --output_dir /tmp/test-mlm --overwrite_output_dir",
+            ]
+          image: registry.cn-beijing.aliyuncs.com/morphling/deepspeed:roberta
+          name: pytorch
+          resources:
+            limits:
+              nvidia.com/gpu: 1
+            requests:
+              nvidia.com/gpu: 1
+          volumeMounts:
+            - mountPath: /mnt/nasdata
+              name: nasdata
+            - mountPath: /dev/shm
+              name: mysys-shm
+      imagePullSecrets:
+        - name: mycred
+      volumes:
+        - hostPath:
+            path: /data/paper/
+          name: nasdata
+        - emptyDir:
+            medium: Memory
+          name: mysys-shm

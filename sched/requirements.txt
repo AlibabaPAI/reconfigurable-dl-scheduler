@@ -1,0 +1,9 @@
+future>=0.17.1
+kubernetes_asyncio==9.1.0
+prometheus_client>=0.7.1
+pandas
+python-dateutil>=2.7.3
+requests>=2.7.0
+numpy>=1.17
+aiohttp==3.8.4
+jsonpatch>=1.26

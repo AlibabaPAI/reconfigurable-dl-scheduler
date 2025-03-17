@@ -1,0 +1,37 @@
+apiVersion: morphling.alibaba.com/v1
+kind: MorphlingJob
+metadata:
+  generateName: t5-
+  namespace: default
+spec:
+  originPerf: 4.576920876480348
+  application: t5
+  localBsz: 8
+  template:
+    spec:
+      containers:
+      - command: ["/bin/sh","-c"]
+        args: ["python -m torch.distributed.launch --nproc_per_node=$NPROC --nnodes=$NNODES  --node_rank=$RANK --master_addr=$MASTER_ADDR --master_port=$MASTER_PORT  /mnt/nasdata/megatron/pretrain_bert.py   --tensor-model-parallel-size $NGPUS  --pipeline-model-parallel-size 1     --num-layers 24   --hidden-size 1536    --num-attention-heads 16    --micro-batch-size $BATCH_SIZE   --global-batch-size 8  --seq-length 1024   --max-position-embeddings 1024    --train-iters $STEPS    --data-path /mnt/nasdata/megatron/my-bert_text_sentence    --vocab-file /mnt/nasdata/wikidata/bert-vocab.txt    --data-impl mmap    --split 949,50,1    --distributed-backend nccl    --lr 0.00015    --lr-decay-style linear    --min-lr 1.0e-5    --weight-decay 1e-2    --clip-grad 1.0    --lr-warmup-fraction .01    --log-interval 1    --eval-interval 100000000    --eval-iters 1","python -m torch.distributed.launch --nproc_per_node=$NPROC --nnodes=$NNODES  --node_rank=$RANK --master_addr=$MASTER_ADDR --master_port=$MASTER_PORT  /mnt/nasdata/megatron/pretrain_bert.py --override-lr-scheduler --adam-beta1 0.9 --adam-beta2 0.999 --tensor-model-parallel-size 1 --lr-decay-iters 320000 --micro-batch-size $BATCH_SIZE --num-layers 24 --hidden-size 1536 --num-attention-heads 16 --seq-length 1024 --max-position-embeddings 1024 --train-iters $STEPS --lr 0.00015 --min-lr 1e-5 --lr-decay-style linear --split 949,50,1 --log-interval 1 --eval-interval 100000000 --eval-iters 1 --weight-decay 1e-2 --clip-grad 1.0 --num-workers 4  --log-optimizer-states-to-tensorboard --vocab-file /mnt/nasdata/wikidata/bert-vocab.txt --data-path /mnt/nasdata/megatron/my-bert_text_sentence --data-impl mmap --deepspeed  --zero-stage 2  --no-pipeline-parallel --cpu-optimizer --deepspeed_config /mnt/nasdata/megatron/examples/bert_with_pile/ds_offload_gpu${NGPUS}_mbsz${BATCH_SIZE}_bert.json","python -m torch.distributed.launch --nproc_per_node=$NPROC --nnodes=$NNODES  --node_rank=$RANK --master_addr=$MASTER_ADDR --master_port=$MASTER_PORT  /mnt/nasdata/megatron/pretrain_bert.py --override-lr-scheduler --adam-beta1 0.9 --adam-beta2 0.999 --tensor-model-parallel-size 1 --lr-decay-iters 320000 --micro-batch-size $BATCH_SIZE --num-layers 24 --hidden-size 1536 --num-attention-heads 16 --seq-length 1024 --max-position-embeddings 1024 --train-iters $STEPS --lr 0.00015 --min-lr 1e-5 --lr-decay-style linear --split 949,50,1 --log-interval 1 --eval-interval 100000000 --eval-iters 1 --weight-decay 1e-2 --clip-grad 1.0 --num-workers 4  --log-optimizer-states-to-tensorboard --vocab-file /mnt/nasdata/wikidata/bert-vocab.txt --data-path /mnt/nasdata/megatron/my-bert_text_sentence --data-impl mmap --deepspeed  --zero-stage 2  --no-pipeline-parallel --deepspeed_config /mnt/nasdata/megatron/examples/bert_with_pile/ds_dp_gpu${NGPUS}_mbsz${BATCH_SIZE}_bert.json"]
+
+        args: ["python -m torch.distributed.launch --nproc_per_node=$NPROC --nnodes=$NNODES  --node_rank=$RANK --master_addr=$MASTER_ADDR --master_port=$MASTER_PORT  /mnt/nasdata/megatron/pretrain_t5.py   --tensor-model-parallel-size $NGPUS   --num-layers 16   --hidden-size 1280   --num-attention-heads 16   --kv-channels 64   --ffn-hidden-size 3072   --encoder-seq-length 768   --decoder-seq-length 768   --vocab-extra-ids 100   --micro-batch-size $BATCH_SIZE   --global-batch-size 8   --max-position-embeddings 1024   --train-iters $STEPS   --lr-decay-iters 1000000   --data-path /mnt/nasdata/megatron/my-bert_text_sentence   --vocab-file /mnt/nasdata/wikidata/bert-vocab.txt   --data-impl mmap   --split 949,50,1   --lr 0.0001   --min-lr 0.00001   --lr-decay-style linear   --lr-warmup-fraction .01   --weight-decay 1e-2   --clip-grad 1.0   --log-interval 1   --eval-interval 1000000000   --eval-iters 1 ","python -m torch.distributed.launch --nproc_per_node=$NPROC --nnodes=$NNODES  --node_rank=$RANK --master_addr=$MASTER_ADDR --master_port=$MASTER_PORT  /mnt/nasdata/megatron/pretrain_t5.py --override-lr-scheduler --adam-beta1 0.9 --adam-beta2 0.999 --tensor-model-parallel-size 1 --lr-decay-iters 1000000 --kv-channels 64 --ffn-hidden-size 3072 --encoder-seq-length 768 --decoder-seq-length 768 --micro-batch-size $BATCH_SIZE --num-layers 16 --hidden-size 1280 --num-attention-heads 16 --max-position-embeddings 1024 --train-iters $STEPS --lr 0.0001 --min-lr 0.00001 --lr-decay-style linear --split 949,50,1 --log-interval 1 --eval-interval 10000000000 --eval-iters 1 --weight-decay 1e-2 --clip-grad 1.0 --vocab-extra-ids 100 --num-workers 4 --log-optimizer-states-to-tensorboard --vocab-file /mnt/nasdata/wikidata/bert-vocab.txt --data-path /mnt/nasdata/megatron/my-bert_text_sentence --data-impl mmap --deepspeed  --zero-stage 2 --no-pipeline-parallel --cpu-optimizer --deepspeed_config /mnt/nasdata/megatron/examples/t5_with_pile/ds_offload_gpu${NGPUS}_mbsz${BATCH_SIZE}_t5.json","python -m torch.distributed.launch --nproc_per_node=$NPROC --nnodes=$NNODES  --node_rank=$RANK --master_addr=$MASTER_ADDR --master_port=$MASTER_PORT  /mnt/nasdata/megatron/pretrain_t5.py --override-lr-scheduler --adam-beta1 0.9 --adam-beta2 0.999 --tensor-model-parallel-size 1 --lr-decay-iters 1000000 --kv-channels 64 --ffn-hidden-size 3072 --encoder-seq-length 768 --decoder-seq-length 768 --micro-batch-size $BATCH_SIZE --num-layers 16 --hidden-size 1280 --num-attention-heads 16 --max-position-embeddings 1024 --train-iters $STEPS --lr 0.0001 --min-lr 0.00001 --lr-decay-style linear --split 949,50,1 --log-interval 1 --eval-interval 10000000000 --eval-iters 1 --weight-decay 1e-2 --clip-grad 1.0 --vocab-extra-ids 100 --num-workers 4 --log-optimizer-states-to-tensorboard --vocab-file /mnt/nasdata/wikidata/bert-vocab.txt --data-path /mnt/nasdata/megatron/my-bert_text_sentence --data-impl mmap --deepspeed  --zero-stage 2 --no-pipeline-parallel --deepspeed_config /mnt/nasdata/megatron/examples/t5_with_pile/ds_dp_gpu${NGPUS}_mbsz${BATCH_SIZE}_t5.json"]
+        image: registry.cn-beijing.aliyuncs.com/morphling/deepspeed:mp3
+        name: pytorch
+        resources:
+          limits:
+            nvidia.com/gpu: 1
+          requests:
+            nvidia.com/gpu: 1
+        volumeMounts:
+        - mountPath: /mnt/nasdata
+          name: nasdata
+        - mountPath: /dev/shm
+          name: mysys-shm
+      imagePullSecrets:
+      - name: mycred
+      volumes:
+      - hostPath:
+          path: /data/paper/
+        name: nasdata
+      - emptyDir: 
+          medium: Memory
+        name: mysys-shm

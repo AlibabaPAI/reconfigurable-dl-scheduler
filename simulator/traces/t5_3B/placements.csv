@@ -1,0 +1,7 @@
+exec_plan,placement,iter_time
+zero-offload,1,4.0345
+zero-offload,2,3.2757
+zero-offload,4,2.8666
+tp+ga,2,3.567
+tp+ga,3,0.9301
+tp+ga,4,0.8233
